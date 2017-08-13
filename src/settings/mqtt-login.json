@@ -3,12 +3,12 @@
     "protocol": "ws",
     "ssl": false,
     "server": "broker.mqttdashboard.com",
-    "path": "",
+    "path": "mqtt",
     "clientId": "testing12345",
     "user": "",
     "pass": "",
     "subscribe_topic": [
-        "something"
+        "testtopic/1"
     ],
     "publish_topic": [
         "testtopic/1"

@@ -1,0 +1,16 @@
+{
+    "port": 1883,
+    "scheme": "tcp",
+    "path": "Healthcare_Vital_BP",
+    "ssl": false,
+    "host": "iot2021.com",
+    "user": "pass",
+    "pass": "pass",
+    "subscribe": [
+        "Healthcare_Vital_BP"
+    ],
+    "publish": [
+        "Healthcare_Vital_BP"
+    ],
+    "keepalive": 10
+}

@@ -1,16 +1,17 @@
 {
-    "port": 1883,
-    "scheme": "tcp",
-    "path": "Healthcare_Vital_BP",
+    "port": 8000,
+    "protocol": "ws",
     "ssl": false,
-    "host": "iot2021.com",
-    "user": "pass",
-    "pass": "pass",
-    "subscribe": [
-        "Healthcare_Vital_BP"
+    "server": "broker.mqttdashboard.com",
+    "path": "",
+    "clientId": "testing12345",
+    "user": "",
+    "pass": "",
+    "subscribe_topic": [
+        "something"
     ],
-    "publish": [
-        "Healthcare_Vital_BP"
+    "publish_topic": [
+        "testtopic/1"
     ],
     "keepalive": 10
 }

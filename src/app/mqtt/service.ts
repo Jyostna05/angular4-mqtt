@@ -63,8 +63,8 @@ export class MQTTService implements TransportService {
     }
 
     // If host isn't set, use the browser's location
-    if (typeof this.config.host === 'undefined') {
-      this.config.host = this._document.location.hostname;
+    if (typeof this.config.server === 'undefined') {
+      this.config.server = this._document.location.hostname;
     }
   }
 
@@ -84,20 +84,20 @@ export class MQTTService implements TransportService {
     }
 
     // Connecting via SSL Websocket?
-    let scheme = 'tcp';
-    console.info(this.config);
-    // if (this.config.ssl) { scheme = 'wss'; }
-    scheme = this.config.scheme;
+    let protocol = 'ws';
+
+    if (this.config.ssl) { protocol = 'wss'; }
+    protocol = this.config.protocol;
     // Client options loaded from config
     const options: mqtt.IClientOptions = {
       'keepalive': this.config.keepalive,
       'reconnectPeriod': 10000,
-      //'clientId': 'clientid_' + Math.floor(Math.random() * 65535),
+      'clientId': this.config.clientId,
       'username': this.config.user,
       'password': this.config.pass
     };
 
-    const url = this.config.scheme + '://' + this.config.host + ':' + this.config.port + '/' + this.config.path;
+    const url = this.config.protocol + '://' + this.config.server + ':' + this.config.port + '/' + this.config.path;
 
     // Create the client and listen for its connection
     this.client = mqtt.connect(url, options);
@@ -136,7 +136,7 @@ export class MQTTService implements TransportService {
   /** Send a message to all topics */
   public publish(message?: string) {
 
-    for (const t of this.config.publish) {
+    for (const t of this.config.publish_topic) {
       this.client.publish(t, message);
     }
   }
@@ -147,12 +147,12 @@ export class MQTTService implements TransportService {
 
     // Subscribe to our configured queues
     // Callback is set at client instantiation (assuming we don't need separate callbacks per queue.)
-    for (const t of this.config.subscribe) {
+    for (const t of this.config.subscribe_topic) {
       this.debug('subscribing: ' + t);
       this.client.subscribe(t);
     }
     // Update the state
-    if (this.config.subscribe.length > 0) {
+    if (this.config.subscribe_topic.length > 0) {
       this.state.next(TransportState.SUBSCRIBED);
     }
   }

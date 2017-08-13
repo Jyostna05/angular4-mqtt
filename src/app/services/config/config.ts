@@ -5,19 +5,19 @@
  */
 export interface Config {
   // Which server?
-  host: string;   // 'localhost' or '127.0.0.1'
+  server: string;   // 'localhost' or '127.0.0.1'
   port: number;   // 15675
-  path: string;   // 'ws'
-  scheme: string;  //protocol
+  path: string; // sub location
+  protocol: string;  //protocol
   ssl: boolean;   // false
-
+  clientId: string;
   // What credentials?
   user: string;
   pass: string;
 
   // Which queues?
-  publish: string[];
-  subscribe: string[];
+  publish_topic: string[];
+  subscribe_topic: string[];
 
   // How often to heartbeat?
   keepalive?: number;

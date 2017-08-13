@@ -1,5 +1,21 @@
-<ul>
-    <li *ngFor="let message of mq">
-        {{ message }}
-    </li>
-</ul>
+ {{this.error}}
+
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <h3> Server to which we have subscribed :</h3>
+        <ul>
+            <li *ngFor="let key of objectKeys(configuration)">
+                {{ key }} : {{configuration[key]}}
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <h3> Messages Received :</h3>
+        <ul>
+            <li *ngFor="let message of mq">
+                {{ message }}
+            </li>
+        </ul>
+
+    </div>
+</div>

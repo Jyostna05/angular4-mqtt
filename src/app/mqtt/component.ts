@@ -1,10 +1,13 @@
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Packet } from 'mqtt';
 
 import { MQTTService } from 'app/mqtt/service';
 import { ConfigService } from 'app/services/config/config.service';
+
+
+
 
 @Component({
     selector: 'mqtt-message',
@@ -19,9 +22,12 @@ export class MqttComponent implements OnInit, OnDestroy {
 
     // Array of historic message (bodies)
     public mq: Array<string> = [];
+    public configuration: Object;
 
     // A count of messages received
     public count = 0;
+    objectKeys = Object.keys;
+    error = "";
 
     /** Constructor */
     constructor(private _mqService: MQTTService,
@@ -29,9 +35,16 @@ export class MqttComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         // Get configuration from config service...
+
+        // if (!window.WebSocket)
+        //   this.error = "WebSocket not supported by this browser";
+
+
         this._configService.getConfig('settings/mqtt-login.json').then(
             config => {
                 // ... then pass it to (and connect) the message queue:
+                this.configuration = config;
+                console.info("THIS CONFIG", this.configuration);
                 this._mqService.configure(config);
                 this._mqService.try_connect()
                     .then(this.on_connect)
